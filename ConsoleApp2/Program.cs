@@ -1,5 +1,7 @@
 ﻿using System.Text;
-
+using System.Text.Json;
+//Дано масив словників. Реалізувати пошук по ключах кожного словника
+//і вивести кількість знайдених результатів на екран.
 class Program
 {
     static void Main()
@@ -22,6 +24,23 @@ class Program
             }
         }
         Console.WriteLine($"Кількість знайдених результатів для ключа '{searchKey}': {count}");
-        Console.ReadKey();
+        
+        
+        if (count > 0)
+        {
+            Dictionary<int, int> results = new Dictionary<int, int>()
+            {
+                {count, searchKey}
+            };
+            string jsonString=JsonSerializer.Serialize(results);
+            string filePath = "result.json";
+            File.WriteAllText(filePath, jsonString );
+            Console.WriteLine("Результат було збережено в json файл.");
+        }
+        else
+        {
+            Console.WriteLine("Результат не було знайдено.");
+        }
+
     }
 }
